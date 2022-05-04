@@ -28,9 +28,9 @@
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <button type="button" class="btn btn-default" ng-click="ctrl.cerrarSesion()">
+                <%--<button type="button" class="btn btn-default" ng-click="ctrl.cerrarSesion()">
                     <%= this.GetMessage("lblCerrarSesion") %>
-                </button>
+                </button>--%>
             </div>
         </div>
         <div class="row">
@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6" ng-hide="true">
+            <div class="col-sm-6" >
                 <div class="row">
                     <div class="col-sm-6" style="font-weight: bold">
                         <%= this.GetMessage("lblMasivo") %>
@@ -193,7 +193,6 @@
                 <table class="table table-condensed table-striped table-hover table-fixed" style="margin-bottom: 0px;">
                     <thead>
                         <tr>
-
                             <th style="width: 250px; text-align: center"><span><%= this.GetMessage("gvRazonSocial") %></span></th>
                             <th style="width: 250px; text-align: center"><span><%= this.GetMessage("gvNombreVialidad") %></span></th>
                             <th style="width: 150px; text-align: center"><span><%= this.GetMessage("gvNumeroExterior") %></span></th>
@@ -208,7 +207,6 @@
                     </thead>
                     <tbody style="max-height: 200px !important">
                         <tr ng-repeat="item in ctrl.personasFisicas" ng-style="{'background-color':item.ErrorURL? '#fac8c2':'#c2facb'}">
-
                             <td style="width: 250px;">{{item.RazonSocial}}</td>
                             <td style="width: 250px;">{{item.NombreVialidad}}</td>
                             <td style="width: 150px;">{{item.NumeroExterior}}</td>

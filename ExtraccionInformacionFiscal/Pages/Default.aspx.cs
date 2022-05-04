@@ -48,9 +48,6 @@ namespace ExtraccionInformacionFiscal
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Session["usuarioLoggeado"] == null)
-                Response.Redirect("Login.aspx");
-
             var a = new logic_acces(ConexionDB);
             Dictionary<string, string> datos = new Dictionary<string, string>();
             var dt = a.ExecuteQuery("RegimenFiscal_Sel", datos).Tables[0];
