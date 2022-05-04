@@ -1,0 +1,16 @@
+﻿lblRFC=RFC
+lblTelefono=Teléfono
+lblSiguiente=Siguiente
+lblOTP=OTP
+lblRechazar=RECHAZAR
+lblAceptar=ACEPTAR
+msgSeleccionarRFC=Favor de introducir el RFC
+msgErrorApiSend=Ocurrió un error al enviar el SMS
+msgSeleccionarTelefono=Favor de introducir el Teléfono
+msgSeleccionarOTP=Favor de introducir el OTP
+lblPaso1=PASO 1: Capture el RFC
+lblPaso2=PASO 2: Capture el Teléfono 
+lblPaso3=PASO 3: Capture el OTP
+msgCodigoEnviado=Un código de verificación será enviado a su teléfono celular
+lblRegresar=Regresar
+msgErrorApiVerify=El código de verificación es incorrecto, favor de reintentar

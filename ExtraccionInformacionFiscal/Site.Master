@@ -1,0 +1,77 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ExtraccionInformacionFiscal.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en" ng-app="app">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> Información Fiscal </title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="App_Themes/Styles/jquery-ui.css" />
+    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<script src="../Scripts/jquery/jquery.js"></script>
+    <script src="../Scripts/jquery/jquery-1.9.1.min.js"></script>    
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server" EnablePartialRendering="true">
+            <Scripts>
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery-1.9.1.min.js" />                
+                <asp:ScriptReference Path="~/Scripts/jquery/modernizr-2.6.2-respond-1.1.0.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery-1.8.3.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery-ui-1.9.2.custom.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery.alerts.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery.tooltips.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/bootstrap.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/semantic.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/main.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery.slitslider.js" />
+                <asp:ScriptReference Path="~/Scripts/util.js" />
+                <asp:ScriptReference Path="~/Scripts/bind.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/moment.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/bootstrap-datetimepicker.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/bootstrap-datepicker.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/locales.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/highcharts.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/highcharts-more.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/solid-gauge.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-animate.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-sanitize.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/smart-table.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-file-upload.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/underscore.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/select.min.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-money-directive.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery.fileupload.js?v=1.1.13" />
+                <asp:ScriptReference Path="~/Scripts/angular/customDirectives.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angularjs-dropdown-multiselect.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-ui-tree.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-ui-tree-filter.js" />
+                <asp:ScriptReference Path="~/Scripts/angular/angular-dirPagination.js" /> 
+                <asp:ScriptReference Path="~/Scripts/angular/mainModule.js?v=1.1.3" />
+                <asp:ScriptReference Path="~/Scripts/angular/ui-bootstrap.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/jquery.bootstrap-responsive-tabs.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/bootstrap-multiselect.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/sortable.min.js" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+    </form>
+</body>
+</html>

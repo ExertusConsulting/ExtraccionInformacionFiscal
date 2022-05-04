@@ -1,0 +1,164 @@
+﻿[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+} 
+.submitted input.ng-invalid-required, .submitted select.ng-invalid, .submitted textarea.ng-invalid,
+ .submitted .ng-invalid-date,  .submitted .ng-invalid-required input, .submitted .ng-invalid-required .btn, .submitted .ng-invalid-max
+{
+    border: 1px solid #F00!important;
+    box-shadow:inset 0px 1px 1px rgba(0,0,0,0.075) !important;
+}
+ 
+
+
+.submitted input[type=file].ng-invalid-required{
+    border: 1px solid #F00!important;
+}
+.submitted input[type=radio].ng-invalid-required{
+    outline: 1px solid #F00;
+}
+/*Autocomplete select2 classes*/
+.ng-invalid.ng-dirty > a.select2-choice {
+    border: 1px solid #aaa !important;
+}
+
+
+.ui-select-dropdown {
+    opacity: 1!important
+}
+.ui-select-dropdown input {
+    margin: 3px 3px 3px 0!important;
+}
+.submitted .ng-invalid a.select2-choice {
+    border: 1px solid #F00!important;
+}
+/*Datepicker classes */
+.datepicker {
+   border: 1px solid rgba(0,0,0,0.15);
+   font-family: "Verdana" !important;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175)!important;
+   box-shadow: 0 6px 12px rgba(0,0,0,0.175)!important;
+   font-size:12px !important;
+}
+.datepicker  .table-condensed th, .datepicker .table-condensed td {
+    padding: 4px 3px!important;
+}
+.datepicker-dropdown {
+    border-radius: 5px!important
+}
+
+/*Fix Header*/
+.table-fixed tbody {
+    display:block;   
+    overflow-y:auto;
+    overflow-x: hidden;
+    overflow-y: scroll
+}
+
+.table-fixed thead, .table-fixed tbody tr, .table-fixed tfoot{
+    display:table;
+    width:100%;
+    table-layout:fixed;    
+}
+.table-fixed thead, .table-fixed tfoot {
+    width: calc(100% - 1.3em);   
+}
+.table-fixed td, .table-fixed th{
+    word-wrap:break-word;
+    height: 25px
+}
+
+.pagination {
+    margin: 0!important
+}
+
+.padding-top-7 {
+    padding-top: 7px!important
+}
+.padding-top-15 {
+    padding-top: 15px!important
+}
+.padding-top-25 {
+    padding-top: 25px!important
+} 
+.table thead {
+    background-color:#f9f9f9
+}
+.border-gray th{
+    border-bottom: 1px solid #ccc!important;
+}
+
+.animate {
+    -webkit-transition: 0.8s linear all;
+    transition:  0.8s linear all;
+     opacity: 1;
+}
+
+
+.animate.ng-hide-remove,
+.animate.ng-hide-add,.animate.ng-hide {
+  display:block!important;
+   
+}
+
+.animate.ng-hide {
+    opacity: 0;
+}
+.header-center th {
+    text-align: center!important
+}
+.status-4 {
+    background-color:green !important
+}
+.gray {
+    background-color:gray !important
+}
+.blue {
+    background-color:aqua !important
+}
+.yellow {
+    background-color:yellowgreen !important
+}
+h4 {
+    color: #3a3a38!important
+}
+.custom-radio > span {
+   padding-left: 25px
+}
+
+.timepicker-picker td {
+    padding: 0!important
+}
+
+/* DATEPICKER FORMAT HEINEKEN */
+.datepicker-switch {
+	background-color:#24a259;
+	color:#fff;
+}
+
+.prev {
+   background-color:#24a259;
+	color:#fff;	
+}
+
+.next {
+   background-color:#24a259;
+	color:#fff;	
+}
+
+.datepicker td, .datepicker th {
+    border-radius:0px !important;
+}
+
+.dow {
+       background-color:#d9e2ba;
+}
+
+.datepicker-days {
+    font-family:Verdana;
+}
+
+.day {
+    border:1px solid #cccccc !important;
+}
+
+.datepicker-switch:hover,.datepicker .next:hover,.datepicker .prev:hover,.datepicker tfoot tr th:hover{background:#24a259 !important}
