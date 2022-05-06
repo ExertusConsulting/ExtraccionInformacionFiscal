@@ -6,7 +6,8 @@
             $scope.Ex = Ex;
             ctrl.login = {};
             setTimeout(function () {
-                $("#dvRFC").effect("slide", {direction:"right"});
+                $("#dvRFC").effect("slide", { direction: "right" });
+                
             }, 100)
 
             
@@ -54,14 +55,12 @@
                 $Ex.Execute("ValidaOTP", ctrl.login, function (response, isInvalid) {
                     var result = response.d;
                     if (result.status) {
-                        //ctrl.siguiente("#dvOTP", "#dvAviso", "left", "right")
-                        ctrl.aceptar();
+                        ctrl.siguiente("#dvOTP", "#dvAviso", "left", "right")
+                        //ctrl.aceptar();
                     }
                     else {
                         Ex.mensajes(Ex.GetResourceValue('msgErrorApiVerify'));
-                        //ctrl.siguiente("#dvOTP", "#dvTelefono", "right", "left");
-                        //ctrl.login.otp = null;
-                        //ctrl.login.telefono = null;
+                        
                     }
 
                 }, {},false);

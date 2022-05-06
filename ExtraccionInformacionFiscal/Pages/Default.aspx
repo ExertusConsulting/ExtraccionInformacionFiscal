@@ -11,7 +11,7 @@
         </div>
         <br />
         <br />
-        <div class="row">
+        <div class="row" ng-hide="true">
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-2">
@@ -102,6 +102,11 @@
                         </button>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-default" ng-click="ctrl.cerrarSesion()">
+                    <%= this.GetMessage("lblCerrarSesion") %>
+                </button>
             </div>
 
             <div class="col-sm-6" ng-hide="true">
