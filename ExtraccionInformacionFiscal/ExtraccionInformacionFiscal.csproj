@@ -280,6 +280,9 @@
     <Content Include="Templates\LogErrores.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\hnkn-confirmaciondatossat - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hnkn-confirmaciondatossat - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
