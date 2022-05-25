@@ -68,7 +68,7 @@
                             }
                             ctrl.informacionSAT = list;
                             ctrl.razonSocial = list[0].RazonSocial;
-                            Ex.mensajes(Ex.GetResourceValue('msgSeleccionarRegimen'));
+                            Ex.mensajes(Ex.GetResourceValue('msgSeleccionarRegimenUsoCfdi'));
                             return false;
                         }
                         else if (regimenes.length == 1) {
@@ -131,8 +131,16 @@
             }
 
             ctrl.confirmar = function () {
-                if (ctrl.filter.regimenFiscal == undefined || (ctrl.filter.usoCfdi == "" || ctrl.filter.usoCfdi == undefined)) {
-                    Ex.mensajes(Ex.GetResourceValue('msgSeleccionarRegimen'));
+                var message = "";
+                if (ctrl.filter.regimenFiscal == undefined)
+                    message = Ex.GetResourceValue('msgSeleccionarRegimen') + "\n";
+
+                if (ctrl.filter.usoCfdi == "" || ctrl.filter.usoCfdi == undefined)
+                    message += Ex.GetResourceValue('msgSeleccionarUsoCFDI')
+                        
+
+                if (message !="") {
+                    Ex.mensajes(message);
                     return;
                 }
 

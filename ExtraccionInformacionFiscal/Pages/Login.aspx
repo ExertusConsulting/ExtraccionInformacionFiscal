@@ -20,7 +20,7 @@
                         <%= this.GetMessage("lblRFC") %>
                     </div>
                     <div class="col-sm-8">
-                        <input type="text" ng-model="ctrl.login.rfc" class="form-control" />
+                        <input type="text" ng-model="ctrl.login.rfc" class="form-control" maxlength="16" />
                     </div>
                     
                 </div>

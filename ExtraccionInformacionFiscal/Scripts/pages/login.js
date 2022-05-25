@@ -39,7 +39,7 @@
                         else {
                             Ex.mensajes(Ex.GetResourceValue('msgErrorApiSend'));
                         }
-                    }, {}, false);
+                    }, {}, true);
                 }, function () {
 
                 }, null);
@@ -63,7 +63,7 @@
                         
                     }
 
-                }, {},false);
+                }, {},true);
             }
 
             ctrl.aceptar = function () {
