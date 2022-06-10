@@ -23,10 +23,19 @@ namespace ExtraccionInformacionFiscal.Pages
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        static public void ValidaRFC(Dictionary<string, object> datos)
+        static public string ValidaRFC(Dictionary<string, object> datos)
         {
-            var a = new logic_acces(ConexionDB);
-            a.ExecuteNonQuery("ValidaRFC_Get", datos);
+            try
+            {
+                var a = new logic_acces(ConexionDB);
+                a.ExecuteNonQuery("ValidaRFC_Get", datos);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            
         }
 
 

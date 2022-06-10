@@ -19,7 +19,13 @@
                 }
                 
                 $Ex.Execute("ValidaRFC", ctrl.login, function (response, isInvalid) {
-                    ctrl.siguiente("#dvRFC", "#dvTelefono","left","right");
+
+                    if (response.d !== null) {
+                        Ex.mensajes(response.d);
+                        return;
+                    }
+
+                    ctrl.siguiente("#dvRFC", "#dvTelefono", "left", "right");
                     
                 }, {}, false);
             }

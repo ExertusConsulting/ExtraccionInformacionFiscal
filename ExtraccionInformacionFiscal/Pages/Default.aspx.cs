@@ -64,6 +64,7 @@ namespace ExtraccionInformacionFiscal
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
+        
         static public object Enviar(Dictionary<string, object> datos)
         {
             var lista = new List<Dictionary<string, object>>();
