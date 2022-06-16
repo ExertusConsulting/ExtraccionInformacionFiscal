@@ -75,10 +75,19 @@ namespace ExtraccionInformacionFiscal
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod]
-        static public void Guardar(Dictionary<string, object> datos)
+        static public string Guardar(Dictionary<string, object> datos)
         {
-            var a = new logic_acces(ConexionDB);
-            a.ExecuteNonQuery("InformacionFiscal_Ins", datos);
+            try
+            {
+                var a = new logic_acces(ConexionDB);
+                a.ExecuteNonQuery("InformacionFiscal_Ins", datos);
+                return "";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            
         }
 
         static public Dictionary<string,object> LeerPaginaSAT(Dictionary<string, object> datos)
@@ -302,8 +311,9 @@ namespace ExtraccionInformacionFiscal
             }
             catch (Exception ex)
             {
+                rowPersonaFisica["TipoPersona"] = "Física";
                 rowPersonaFisica["ErrorURL"] = true;
-                result = $"Ha ocurrido un error: {ex}";
+                result = $"Ha ocurrido un error: {ex.Message}";
                 rowPersonaFisica["MensajeError"] = result;
                 return rowPersonaFisica;
             }

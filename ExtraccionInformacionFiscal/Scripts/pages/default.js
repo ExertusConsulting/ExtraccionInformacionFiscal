@@ -118,6 +118,12 @@
                 ctrl.personasFisicas = [];
                 ctrl.personasMorales = [];
                 $Ex.Execute("Guardar", item, function (response, isInvalid) {
+
+                    if (response.d != "") {
+                        Ex.GetResourceValue(response.d)
+                        return;
+                    }
+
                     item.MensajeError = "";
                     item.ErrorURL = false;
                     ; if (item.TipoPersona == "Física") {
