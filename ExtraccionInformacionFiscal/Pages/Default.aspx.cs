@@ -204,13 +204,13 @@ namespace ExtraccionInformacionFiscal
                         }
 
                     }
-                    if (rowPersonaFisica.ContainsKey("CURP") && !String.IsNullOrEmpty(rowPersonaFisica["CURP"].ToString()))
-                    {
+                    //if (rowPersonaFisica.ContainsKey("CURP") && !String.IsNullOrEmpty(rowPersonaFisica["CURP"].ToString()))
+                    //{
                         if (rowPersonaFisica.ContainsKey("Nombre"))
                         {
                             rowPersonaFisica["RazonSocial"] = rowPersonaFisica["Nombre"].ToString() + " " + rowPersonaFisica["ApellidoPaterno"].ToString() + " " + rowPersonaFisica["ApellidoMaterno"].ToString();
                         }
-                    }
+                    //}
                     
                     var regimenes = rowPersonaFisica["Regimenes"].ToString().Split('|');
                     var fechasAlta = rowPersonaFisica["FechasDeAlta"].ToString().Split('|');
