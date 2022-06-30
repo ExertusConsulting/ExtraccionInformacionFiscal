@@ -219,13 +219,20 @@ namespace ExtraccionInformacionFiscal
                     {
                         var fecha = fechasAlta[i];
                         var nuevaFecha = 0;
+                        var parameters = new Dictionary<string, object>();
+                        
+                        parameters.Add("RegimenFiscal", item);
+                        var regimenNoValido = a.ExecuteQuery("ValidaRegimenFiscal_Get", parameters).Tables[0];
+                        var esValido = regimenNoValido.Rows.Count==0;
+                        
+
                         if (fecha != "")
                         {
                             var partesFecha = fecha.Split('-');
                             nuevaFecha = Convert.ToInt32(partesFecha[2] + partesFecha[1] + partesFecha[0]);
                         }
 
-                        regimenesList.Add(new CamposSAT() { FechaAlta = nuevaFecha, Regimen = item });
+                        regimenesList.Add(new CamposSAT() { FechaAlta = nuevaFecha, Regimen = item, Valido = esValido });
                         i++;
                     }
 
@@ -236,7 +243,24 @@ namespace ExtraccionInformacionFiscal
                     
                     if (regimenesList.Count > 0)
                     {
-                        var regimen = regimenesList.OrderByDescending(b => b.FechaAlta).Select(b => b.Regimen).FirstOrDefault();
+                        var regimen = "";
+
+                        if (regimenesList.Any(e => e.Valido))
+                        {
+                            regimen = regimenesList
+                                .Where(b => b.Valido)
+                                .OrderByDescending(b => b.FechaAlta)
+                                .Select(b => b.Regimen)
+                                .FirstOrDefault();
+                        }
+                        else
+                        {
+                            regimen = regimenesList
+                                .OrderByDescending(b => b.FechaAlta)
+                                .Select(b => b.Regimen)
+                                .FirstOrDefault();
+                        }
+                        
                         rowPersonaFisica["Regimen"] = regimen;
                         var parameters = new Dictionary<string, string>();
                         parameters.Add("Regimen", regimen);
@@ -273,20 +297,20 @@ namespace ExtraccionInformacionFiscal
                         rowPersonaFisica["MensajeError"] = result;
                         return rowPersonaFisica;
                     }
-                    dtRfc = a.ExecuteQuery("InformacionFiscal_Sel", datos).Tables[0];
+                    //dtRfc = a.ExecuteQuery("InformacionFiscal_Sel", datos).Tables[0];
 
-                    if (dtRfc.Rows.Count > 0 )
-                    {
-                        if (!datos.ContainsKey("esMasivo"))
-                            result = "ACTUALIZAR";
-                        else
-                            result = "El RFC ya existe (" +rfc +")" ;
+                    //if (dtRfc.Rows.Count > 0 )
+                    //{
+                    //    if (!datos.ContainsKey("esMasivo"))
+                    //        result = "ACTUALIZAR";
+                    //    else
+                    //        result = "El RFC ya existe (" +rfc +")" ;
 
-                        rowPersonaFisica["ErrorURL"] = true;
-                        //result = "ACTUALIZAR";
-                        rowPersonaFisica["MensajeError"] = result;
-                        return rowPersonaFisica;
-                    }
+                    //    rowPersonaFisica["ErrorURL"] = true;
+                    //    //result = "ACTUALIZAR";
+                    //    rowPersonaFisica["MensajeError"] = result;
+                    //    return rowPersonaFisica;
+                    //}
                 }
                 else
                 {

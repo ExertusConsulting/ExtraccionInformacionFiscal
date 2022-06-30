@@ -12,6 +12,7 @@ namespace ExtraccionInformacionFiscal.Code
         public TipoPersona TipoPersona { get; set; }
         public int FechaAlta { get; set; }
         public string Regimen { get; set; }
+        public bool Valido { get; set; }
     }
 
     public enum TipoPersona
