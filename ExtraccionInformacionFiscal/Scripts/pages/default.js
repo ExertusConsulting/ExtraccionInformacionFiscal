@@ -12,6 +12,7 @@
             ctrl.filter = { rfc: "", cfdi: "", usoCfdi: "" };
             ctrl.usoCfdisOriginales = usoCfdis;
             ctrl.usoCfdis = [];
+            ctrl.cryptoKey = cryptoKey;
             $scope.trustAsHtml = function (string) {
                 return $sce.trustAsHtml(string);
             };
@@ -41,18 +42,42 @@
                 ctrl.mostrarRegimenes = false;
                 var params = angular.copy(ctrl.filter);
                 $Ex.Execute("Enviar", params, function (response, isInvalid) {
+
+                    var personasFisicas = ctrl.decrypt(response.d.PersonasFisicas);
+                    
                     ctrl.filter.usoCfdi = params.usoCfdi;
-                    if (!ctrl.validaInformacion(response.d.PersonasFisicas)) {
+                    if (!ctrl.validaInformacion(personasFisicas)) {
                         return
                     }
                     
-                    if (response.d.PersonasFisicas.length > 0) {
-                        ctrl.razonSocial = response.d.PersonasFisicas[0].RazonSocial;
-                        ctrl.guardar(response.d.PersonasFisicas[0]);
+                    if (personasFisicas.length > 0) {
+                        ctrl.razonSocial = personasFisicas[0].RazonSocial;
+                        ctrl.guardar(personasFisicas[0]);
                     }
 
                 });
 
+            }
+
+            ctrl.decrypt = function (cipherArray) {
+                var strHexWA = (CryptoJS.lib.WordArray.create(new Uint8Array(cipherArray)));
+                var KeyWA = CryptoJS.enc.Utf8.parse(ctrl.cryptoKey);
+                var IVWA = CryptoJS.enc.Utf8.parse(ctrl.cryptoKey);
+                var decrypt = CryptoJS.AES.decrypt({ ciphertext: strHexWA }, KeyWA, {
+                    iv: IVWA,
+                    padding: CryptoJS.pad.Pkcs7,
+                    mode: CryptoJS.mode.CBC
+                });
+                var plaintext = decrypt.toString(CryptoJS.enc.Utf8);
+                return JSON.parse(plaintext);
+            }
+
+            ctrl.encrypt = function (item) {
+                var itemJson = JSON.stringify(item);
+                var key = CryptoJS.enc.Utf8.parse(ctrl.cryptoKey);
+                var iv = CryptoJS.enc.Utf8.parse(ctrl.cryptoKey);
+                var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(itemJson), key, { keySize: 128 / 8, iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+                return encrypted.toString();
             }
 
             ctrl.validaInformacion = function (list) {
@@ -117,7 +142,11 @@
                 ctrl.informacionSAT = [];
                 ctrl.personasFisicas = [];
                 ctrl.personasMorales = [];
-                $Ex.Execute("Guardar", item, function (response, isInvalid) {
+
+                
+                var parameters = { item: ctrl.encrypt(item) };
+
+                $Ex.Execute("Guardar", parameters, function (response, isInvalid) {
 
                     if (response.d != "") {
                         Ex.GetResourceValue(response.d)
@@ -126,12 +155,7 @@
 
                     item.MensajeError = "";
                     item.ErrorURL = false;
-                    ; if (item.TipoPersona == "Física") {
-                        ctrl.personasFisicas.push(item);
-                    }
-                    else {
-                        ctrl.personasMorales.push(item);
-                    }
+                    ctrl.personasFisicas.push(item);
                     Ex.mensajes(Ex.GetResourceValue('msgGuardadoExitoso'));
                 });
             }

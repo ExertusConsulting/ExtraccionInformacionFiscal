@@ -1,4 +1,5 @@
 ﻿using logic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace ExtraccionInformacionFiscal.Pages
                 var token = ConfigurationManager.AppSettings["OTPToken"].ToString();
                 var sender = ConfigurationManager.AppSettings["OTPSender"].ToString();
                 
-                var queryString = "?auth=" + token + "&phone=" + datos["telefono"] + "&msg=" + mensaje + "&sender=" + sender;
+                var queryString = "?auth=" + token + "&phone=" + datos["telefono"] + "&msg=" + mensaje + "&sender=" + sender +"&force=1";
                 url = url + queryString;
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
 
@@ -73,9 +74,31 @@ namespace ExtraccionInformacionFiscal.Pages
                 datos["error"] = Convert.ToBoolean(parsed["error"]);
                 return datos;
             }
+            
             catch (Exception ex)
             {
                 datos["status"] = false;
+                if (ex is WebException)
+                {
+                    var exception = (WebException)ex;
+                    var response = (HttpWebResponse)exception.Response;
+
+                    if ((int)response.StatusCode == 404)
+                        datos["mensaje"] = "Ocurrió un error al enviar el SMS";
+                    
+                    else if ((int)response.StatusCode == 429)
+                        datos["mensaje"] = "Alcanzó el límite de intentos, vuelva a intentar mas tarde";
+                    
+                    else if ((int)response.StatusCode == 406)
+                        datos["mensaje"] = "Ha alcanzado el límite de intentos";
+                    
+                    else if ((int)response.StatusCode == 403)
+                        datos["mensaje"] = "El código OTP es inválido";
+                    
+                }
+                else
+                    datos["mensaje"] = "Ocurrió un error al enviar el SMS";
+                
                 return datos;
             }
         }
@@ -109,8 +132,28 @@ namespace ExtraccionInformacionFiscal.Pages
             }
             catch (Exception ex)
             {
-                //throw new Exception(ex.Message + "|" + ex.StackTrace);
                 datos["status"] = false;
+                if (ex is WebException)
+                {
+                    var exception = (WebException)ex;
+                    var response = (HttpWebResponse)exception.Response;
+
+                    if ((int)response.StatusCode == 404)
+                        datos["mensaje"] = "Ocurrió un error al enviar el SMS";
+
+                    else if ((int)response.StatusCode == 429)
+                        datos["mensaje"] = "Alcanzó el límite de intentos, vuelva a intentar mas tarde";
+
+                    else if ((int)response.StatusCode == 406)
+                        datos["mensaje"] = "Ha alcanzado el límite de intentos";
+
+                    else if ((int)response.StatusCode == 403)
+                        datos["mensaje"] = "El código OTP es inválido";
+
+                }
+                else
+                    datos["mensaje"] = "Ocurrió un error al enviar el SMS";
+
                 return datos;
             }
             

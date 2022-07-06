@@ -41,7 +41,7 @@ namespace ExtraccionInformacionFiscal.Code
                     }
                     var response = serializer.Serialize(new
                     {
-                        PersonasFisicas = result.Where(a => a["TipoPersona"].ToString() == "Física")
+                        PersonasFisicas = result//.Where(a => a["TipoPersona"].ToString() == "Física")
                     });
 
                     context.Response.Write(response);

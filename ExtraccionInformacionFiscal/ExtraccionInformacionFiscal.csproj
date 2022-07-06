@@ -182,6 +182,7 @@
     <Content Include="Scripts\angular\underscore.js" />
     <Content Include="Scripts\bind.js" />
     <Content Include="Scripts\Exertus.Common.js" />
+    <Content Include="Scripts\jquery\aes.js" />
     <Content Include="Scripts\jquery\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\jquery\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\jquery\bootstrap-multiselect.js" />
@@ -218,6 +219,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Code\AES.cs" />
     <Compile Include="Code\CamposSAT.cs" />
     <Compile Include="Code\UploadCargaMasiva.ashx.cs">
       <DependentUpon>UploadCargaMasiva.ashx</DependentUpon>

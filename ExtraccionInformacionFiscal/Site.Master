@@ -62,6 +62,7 @@
                 <asp:ScriptReference Path="~/Scripts/jquery/jquery.bootstrap-responsive-tabs.js" />
                 <asp:ScriptReference Path="~/Scripts/jquery/bootstrap-multiselect.js" />
                 <asp:ScriptReference Path="~/Scripts/jquery/sortable.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery/aes.js" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>

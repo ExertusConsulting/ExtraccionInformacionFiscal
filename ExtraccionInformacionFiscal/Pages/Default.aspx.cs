@@ -1,5 +1,6 @@
 ﻿using ExtraccionInformacionFiscal.Code;
 using logic;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,10 @@ namespace ExtraccionInformacionFiscal
             dt = a.ExecuteQuery("UsoCFDIValidos_Cmb", datos).Tables[0];
             jSON = this.SerializerJson(this.DataTableToMap(dt));
             this.RunJavascriptBeforeLoadPage("var usoCfdis = jQuery.parseJSON('" + HttpUtility.JavaScriptStringEncode(jSON) + "');");
+
+            var cryptoKey = System.Configuration.ConfigurationManager.AppSettings["CryptoKey"].ToString();
+            this.RunJavascriptBeforeLoadPage("var cryptoKey = '" + cryptoKey + "';");
+
         }
 
         [WebMethod(EnableSession = true)]
@@ -70,7 +75,11 @@ namespace ExtraccionInformacionFiscal
             var lista = new List<Dictionary<string, object>>();
             var result = LeerPaginaSAT(datos);
             lista.Add(result);
-            return new { PersonasFisicas= lista.Where(a=> a["TipoPersona"].ToString() =="Física"), PersonasMorales= lista.Where(a => a["TipoPersona"].ToString() == "Moral") }; 
+            //return new { PersonasFisicas=  lista }; 
+            var json = JsonConvert.SerializeObject(lista);
+            var encrypted = AES.EncryptStringAES(json);
+            
+            return new { PersonasFisicas = encrypted };
         }
 
         [WebMethod(EnableSession = true)]
@@ -79,8 +88,10 @@ namespace ExtraccionInformacionFiscal
         {
             try
             {
+                var json = AES.DecryptStringAES(datos["item"].ToString());
+                var parameters =JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
                 var a = new logic_acces(ConexionDB);
-                a.ExecuteNonQuery("InformacionFiscal_Ins", datos);
+                a.ExecuteNonQuery("InformacionFiscal_Ins", parameters);
                 return "";
             }
             catch (Exception e)
@@ -106,7 +117,7 @@ namespace ExtraccionInformacionFiscal
                 var usoCfdi = datos["usoCfdi"].ToString();
                 rowPersonaFisica["IDCFDI"] = cfdi;
                 rowPersonaFisica["RFC"] = rfc;
-                rowPersonaFisica["TipoPersona"] = "Física";
+                //rowPersonaFisica["TipoPersona"] = "Física";
                 rowPersonaFisica["usoCfdi"] = usoCfdi;
                 rowPersonaFisica["ErrorURL"] = false;
                 rowPersonaFisica["MensajeError"] = "";
@@ -268,6 +279,7 @@ namespace ExtraccionInformacionFiscal
                                     rowPersonaFisica["ErrorURL"] = true;
                                     result = "El uso del CFDI no es valido para el régimen Fiscal que tiene asignado el cliente";
                                     rowPersonaFisica["MensajeError"] = result;
+                                    RemoveKeys(rowPersonaFisica);
                                     return rowPersonaFisica;
                                 }
                                 else
@@ -284,10 +296,13 @@ namespace ExtraccionInformacionFiscal
                         rowPersonaFisica["ErrorURL"] = true;
                         result = "No encontró información Cédula Fiscal";
                         rowPersonaFisica["MensajeError"] = result;
+                        RemoveKeys(rowPersonaFisica);
                         return rowPersonaFisica;
                     }
                     dtRfc = a.ExecuteQuery("InformacionFiscal_Sel", datos).Tables[0];
 
+
+                    
                     if (dtRfc.Rows.Count > 0 )
                     {
                         if (!datos.ContainsKey("esMasivo"))
@@ -298,6 +313,7 @@ namespace ExtraccionInformacionFiscal
                         rowPersonaFisica["ErrorURL"] = true;
                         //result = "ACTUALIZAR";
                         rowPersonaFisica["MensajeError"] = result;
+                        RemoveKeys(rowPersonaFisica);
                         return rowPersonaFisica;
                     }
                 }
@@ -306,6 +322,7 @@ namespace ExtraccionInformacionFiscal
                     rowPersonaFisica["ErrorURL"] = true;
                     result = "No encontró información de Cédula Fiscal (RFC: " + rfc + ")";
                     rowPersonaFisica["MensajeError"] = result;
+                    RemoveKeys(rowPersonaFisica);
                     return rowPersonaFisica;
                 }
             }
@@ -315,10 +332,27 @@ namespace ExtraccionInformacionFiscal
                 rowPersonaFisica["ErrorURL"] = true;
                 result = $"Ha ocurrido un error: {ex.Message}";
                 rowPersonaFisica["MensajeError"] = result;
+                RemoveKeys(rowPersonaFisica);
                 return rowPersonaFisica;
             }
-
+            RemoveKeys(rowPersonaFisica);
             return rowPersonaFisica;
+        }
+
+        static private void RemoveKeys(Dictionary<string,object> rowPersonaFisica)
+        {
+            if (rowPersonaFisica.ContainsKey("FechaConstitucion")) rowPersonaFisica.Remove("FechaConstitucion");
+            if (rowPersonaFisica.ContainsKey("ApellidoPaterno")) rowPersonaFisica.Remove("ApellidoPaterno");
+            if (rowPersonaFisica.ContainsKey("ApellidoMaterno")) rowPersonaFisica.Remove("ApellidoMaterno");
+            if (rowPersonaFisica.ContainsKey("FechaNacimiento")) rowPersonaFisica.Remove("FechaNacimiento");
+            if (rowPersonaFisica.ContainsKey("FechaInicioOperaciones")) rowPersonaFisica.Remove("FechaInicioOperaciones");
+            if (rowPersonaFisica.ContainsKey("FechaUltimoCambioSituacion")) rowPersonaFisica.Remove("FechaUltimoCambioSituacion");
+            if (rowPersonaFisica.ContainsKey("TipoVialidad")) rowPersonaFisica.Remove("TipoVialidad");
+            if (rowPersonaFisica.ContainsKey("Correo")) rowPersonaFisica.Remove("Correo");
+            if (rowPersonaFisica.ContainsKey("AL")) rowPersonaFisica.Remove("AL");
+            if (rowPersonaFisica.ContainsKey("FechaAlta")) rowPersonaFisica.Remove("FechaAlta");
+            if (rowPersonaFisica.ContainsKey("TipoPersona")) rowPersonaFisica.Remove("TipoPersona");
+            if (rowPersonaFisica.ContainsKey("Nombre")) rowPersonaFisica.Remove("Nombre");
         }
 
         [WebMethod(EnableSession = true)]
