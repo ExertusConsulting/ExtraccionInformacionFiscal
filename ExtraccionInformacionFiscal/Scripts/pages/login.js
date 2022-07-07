@@ -61,9 +61,7 @@
                 $Ex.Execute("ValidaOTP", ctrl.login, function (response, isInvalid) {
                     var result = response.d;
                     if (result.status) {
-                        ctrl.siguiente("#dvTelefono", "#dvAviso", "left", "right")
-                        
-                        //ctrl.aceptar();
+                        ctrl.siguiente("#dvOTP", "#dvAviso", "left", "right")
                     }
                     else {
                         Ex.mensajes(result.mensaje);
