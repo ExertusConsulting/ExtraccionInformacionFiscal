@@ -52,7 +52,7 @@ namespace ExtraccionInformacionFiscal.Pages
                 var token = ConfigurationManager.AppSettings["OTPToken"].ToString();
                 var sender = ConfigurationManager.AppSettings["OTPSender"].ToString();
                 
-                var queryString = "?auth=" + token + "&phone=" + datos["telefono"] + "&msg=" + mensaje + "&sender=" + sender +"&force=1";
+                var queryString = "?auth=" + token + "&phone=" + datos["telefono"] + "&msg=" + mensaje + "&sender=" + sender;
                 url = url + queryString;
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
 
